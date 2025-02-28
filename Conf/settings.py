@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'app_courses',
     'app_attendance',
     'app_payments',
+    'app_statistics',
 
 ]
 
