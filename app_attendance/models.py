@@ -12,7 +12,6 @@ class Attendance(BaseModel):
     ('late', 'Late'),
     ('excused', 'Excused')
     ]
-        
     group = models.ForeignKey(Group,on_delete=models.CASCADE, related_name='attendance')
     student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='attendance')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='present')
@@ -37,10 +36,11 @@ class Level(BaseModel):
 
 class Grade(BaseModel):
     student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='grade')
-    group = models.ForeignKey()
+    group = models.ForeignKey(Group,on_delete=models.CASCADE,related_name='grade')
     value = models.IntegerField()
     description = models.TextField(null=True, blank=True)
-    
+    level = models.ForeignKey('Level',on_delete=models.CASCADE,related_name='grade')
+
     def __str__(self):
         return f"{self.student.user.phone} - {self.value}"
 
