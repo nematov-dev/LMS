@@ -81,8 +81,9 @@ class Worker(BaseModel):
 
 class Student(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    group = models.ManyToManyField('app_courses.Group', related_name='student')
+    cource = models.ManyToManyField('app_courses.Course',related_name='student')
     description = models.TextField(null=True, blank=True)
-    group = models.ManyToManyField('app_courses.Group', related_name='group')
 
     def __str__(self):
         return self.user.phone
