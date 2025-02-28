@@ -1,10 +1,9 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
-from django.contrib.auth.models import AbstractUser, PermissionsMixin
+from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import RegexValidator
 from django.db import models
 
 from app_common.models import BaseModel
-from app_courses.models import Group
 
 
 class UserManager(BaseUserManager):
@@ -91,6 +90,19 @@ class Student(BaseModel):
     class Meta:
         verbose_name = 'Student'
         verbose_name_plural = 'Students'
+
+class Teacher(BaseModel):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    group = models.ManyToManyField('app_courses.Group', related_name='t_student')
+    description = models.TextField(null=True, blank=True)
+    cource = models.ManyToManyField('app_courses.Course',related_name='t_student')
+
+    def __str__(self):
+        return self.user.phone
+
+    class Meta:
+        verbose_name = 'Teacher'
+        verbose_name_plural = 'Teachers'
 
 class Parent(BaseModel):
     name = models.CharField(max_length=50)

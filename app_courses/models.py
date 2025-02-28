@@ -57,7 +57,6 @@ class Group(BaseModel):
     active = models.BooleanField(default=True)
     description = models.TextField(null=True, blank=True)
     table = models.ForeignKey('Table', on_delete=models.SET_NULL, null=True, blank=True, related_name='groups')
-    student_count = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.title
