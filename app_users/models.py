@@ -94,7 +94,7 @@ class Student(BaseModel):
 class Parent(BaseModel):
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
-    students = models.ForeignKey('Student',on_delete=models.CASCADE, related_name='parent')
+    students = models.ManyToManyField('Student', related_name='parent')
     phone = models.CharField(max_length=20)
     address = models.CharField(max_length=50)
     description = models.TextField(null=True, blank=True)
