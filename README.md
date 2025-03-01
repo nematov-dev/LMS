@@ -1,71 +1,228 @@
-1. Auth (app_auth)
+# API Endpoints
 
-POST /auth/login/ – Kirish
-POST /auth/logout/ – Chiqish
-POST /auth/change-password/ – Parolni o‘zgartirish
-POST /auth/reset-password/ – Parolni tiklash (OTP orqali)
-GET /auth/me/ – Hozirgi foydalanuvchi ma’lumotlarini olish
+## 1. Auth (app_auth)
 
-2. Users (app_users)
+### Login
+**Endpoint:** `POST /auth/login/`  
+**Description:** Kirish.  
 
-GET /users/ – Barcha foydalanuvchilar ro‘yxati
-GET /users/{id}/ – Foydalanuvchi ma’lumotlarini olish
-POST /users/create/ – Yangi foydalanuvchi yaratish (Admin tomonidan)
-PUT /users/{id}/update/ – Foydalanuvchi ma’lumotlarini yangilash
-DELETE /users/{id}/delete/ – Foydalanuvchini o‘chirish
+### Logout
+**Endpoint:** `POST /auth/logout/`  
+**Description:** Chiqish.  
 
-3. Courses & Groups (app_courses)
+### Change Password
+**Endpoint:** `POST /auth/change-password/`  
+**Description:** Parolni o‘zgartirish.  
 
-GET /courses/ – Barcha kurslar
-GET /courses/{id}/ – Kurs tafsilotlari
-POST /courses/create/ – Yangi kurs yaratish
-PUT /courses/{id}/update/ – Kurs ma’lumotlarini o‘zgartirish
-DELETE /courses/{id}/delete/ – Kursni o‘chirish
+### Reset Password
+**Endpoint:** `POST /auth/reset-password/`  
+**Description:** Parolni tiklash (OTP orqali).  
 
-GET /groups/ – Barcha guruhlar
-GET /groups/{id}/ – Guruh tafsilotlari
-POST /groups/create/ – Yangi guruh yaratish
-POST /groups/{id}/add-student/ – Talabani guruhga qo‘shish
-DELETE /groups/{id}/remove-student/ – Talabani guruhdan chiqarish
+### Get Current User
+**Endpoint:** `GET /auth/me/`  
+**Description:** Hozirgi foydalanuvchi ma’lumotlarini olish.  
 
-4. Payments (app_payments)
 
-GET /payments/ – Barcha to‘lovlar
-GET /payments/{id}/ – To‘lov tafsilotlari
-POST /payments/create/ – Yangi to‘lov qilish
-GET /payments/student/{id}/ – Talabaning barcha to‘lovlari
+## 2. Users (app_users)
 
-5. Attendance & Grades (app_attendance)
+### Get All Users
+**Endpoint:** `GET /users/users/`  
+**Description:** Barcha foydalanuvchilar ro‘yxatini olish.  
 
-GET /attendance/ – Barcha davomat ma’lumotlari
-GET /attendance/{id}/ – Talabaning davomat tafsilotlari
-POST /attendance/mark/ – Talabaning davomatini belgilash
+### Get Single User
+**Endpoint:** `GET /users/{id}/`  
+**Description:** Foydalanuvchi ma’lumotlarini olish.  
 
-GET /grades/ – Barcha baholar
-GET /grades/{id}/ – Talabaning baholari
-POST /grades/add/ – Yangi baho qo‘shish
-PUT /grades/{id}/update/ – Baho o‘zgartirish
+### Create User
+**Endpoint:** `POST /users/`  
+**Description:** Yangi foydalanuvchi yaratish (Admin tomonidan).  
 
-6. Statistics (app_statistics)
+### Update User
+**Endpoint:** `PUT /users/{id}/`  
+**Description:** Foydalanuvchi ma’lumotlarini yangilash.  
 
-Foydalanuvchi statistikasi
-GET /statistics/users/ – Jami foydalanuvchilar statistikasi (nechta admin, worker, student bor)
-GET /statistics/users/{id}/ – Foydalanuvchining shaxsiy statistikasi
+### Delete User
+**Endpoint:** `DELETE /users/{id}/`  
+**Description:** Foydalanuvchini o‘chirish.  
 
-Kurs va guruh statistikasi
-GET /statistics/courses/ – Eng ommabop kurslar, eng ko‘p o‘quvchi yozilgan kurslar
-GET /statistics/groups/ – Guruhlar soni, faol guruhlar, bekor qilingan guruhlar
-GET /statistics/groups/{id}/attendance/ – Guruhning o‘rtacha davomat statistikasi
+### Workers
 
-Talabalar statistikasi
-GET /statistics/students/top/ – Eng yuqori baholarga ega talabalar
-GET /statistics/students/attendance/ – Eng ko‘p dars qoldirgan talabalar
+#### Get All Workers
+**Endpoint:** `GET /users/workers/`  
+**Description:** Barcha workerlar ro‘yxati.  
 
-Davomat va baho statistikasi
-GET /statistics/attendance/ – Jami davomat statistikasi (necha foiz darsga qatnashgan)
-GET /statistics/attendance/{id}/ – Talabaning o‘rtacha davomat foizi
-GET /statistics/grades/ – O‘rtacha baholar statistikasi
+#### Get Single Worker
+**Endpoint:** `GET /users/worker/{id}/`  
+**Description:** Bitta worker ma’lumotlari.  
 
-To‘lov statistikasi
-GET /statistics/payments/ – Umumiy tushum, eng ko‘p to‘lov qilingan oy
-GET /statistics/payments/debtors/ – Qarzdor talabalar ro‘yxati
+#### Create Worker
+**Endpoint:** `POST /users/workers/create/`  
+**Description:** Yangi worker yaratish.  
+
+#### Update Worker
+**Endpoint:** `PUT /users/workers/{id}/update/`  
+**Description:** Worker ma’lumotlarini o‘zgartirish.  
+
+### Teachers
+
+#### Get All Teachers
+**Endpoint:** `GET /users/teachers/`  
+**Description:** Barcha o‘qituvchilar ro‘yxatini olish.  
+
+#### Get Single Teacher
+**Endpoint:** `GET /users/teacher/{id}/`  
+**Description:** Bitta o‘qituvchi ma’lumotlarini olish.  
+
+#### Create Teacher
+**Endpoint:** `POST /users/create/teacher/`  
+**Description:** Yangi o‘qituvchi yaratish.  
+
+#### Update Teacher
+**Endpoint:** `PUT /users/update/teacher/{id}/`  
+**Description:** O‘qituvchi ma’lumotlarini yangilash.  
+
+### Students
+
+#### Get All Students
+**Endpoint:** `GET /users/students/`  
+**Description:** Barcha talabalar ro‘yxatini olish.  
+
+#### Get Single Student
+**Endpoint:** `GET /users/student/{id}/`  
+**Description:** Bitta talaba ma’lumotlarini olish.  
+
+#### Create Student
+**Endpoint:** `POST /users/create/student/`  
+**Description:** Yangi talaba yaratish.  
+
+#### Update Student
+**Endpoint:** `PUT /users/update/student/{id}/`  
+**Description:** Talaba ma’lumotlarini yangilash.  
+
+---
+
+## 3. Departments
+
+### Get All Departments
+**Endpoint:** `GET /departments/`  
+**Description:** Barcha bo‘limlar ro‘yxatini olish.  
+
+### Get Single Department
+**Endpoint:** `GET /departments/{id}/`  
+**Description:** Bitta bo‘lim ma’lumotlarini olish.  
+
+### Create Department
+**Endpoint:** `POST /departments/create/`  
+**Description:** Yangi bo‘lim yaratish.  
+
+### Update Department
+**Endpoint:** `PUT /departments/update/{id}/`  
+**Description:** Bo‘lim ma’lumotlarini yangilash.  
+
+### Delete Department
+**Endpoint:** `DELETE /departments/delete/{id}/`  
+**Description:** Bo‘limni o‘chirish.  
+
+---
+
+## 4. Courses & Groups (app_courses)
+
+### Courses
+
+#### Get All Courses
+**Endpoint:** `GET /courses/`  
+**Description:** Barcha kurslar ro‘yxatini olish.  
+
+#### Get Course Details
+**Endpoint:** `GET /courses/{id}/`  
+**Description:** Kurs tafsilotlarini olish.  
+
+#### Create Course
+**Endpoint:** `POST /courses/create/`  
+**Description:** Yangi kurs yaratish.  
+
+#### Update Course
+**Endpoint:** `PUT /courses/{id}/update/`  
+**Description:** Kurs ma’lumotlarini o‘zgartirish.  
+
+#### Delete Course
+**Endpoint:** `DELETE /courses/{id}/delete/`  
+**Description:** Kursni o‘chirish.  
+
+### Groups
+
+#### Get All Groups
+**Endpoint:** `GET /groups/`  
+**Description:** Barcha guruhlar ro‘yxatini olish.  
+
+#### Get Group Details
+**Endpoint:** `GET /groups/{id}/`  
+**Description:** Guruh tafsilotlarini olish.  
+
+#### Create Group
+**Endpoint:** `POST /groups/create/`  
+**Description:** Yangi guruh yaratish.  
+
+#### Add Student to Group
+**Endpoint:** `POST /groups/{id}/add-student/`  
+**Description:** Talabani guruhga qo‘shish.  
+
+#### Remove Student from Group
+**Endpoint:** `DELETE /groups/{id}/remove-student/`  
+**Description:** Talabani guruhdan chiqarish.  
+
+---
+
+## 5. Payments (app_payments)
+
+### Get All Payments
+**Endpoint:** `GET /payments/`  
+**Description:** Barcha to‘lovlar.  
+
+### Get Payment Details
+**Endpoint:** `GET /payments/{id}/`  
+**Description:** To‘lov tafsilotlari.  
+
+### Create Payment
+**Endpoint:** `POST /payments/create/`  
+**Description:** Yangi to‘lov qilish.  
+
+### Get Student Payments
+**Endpoint:** `GET /payments/student/{id}/`  
+**Description:** Talabaning barcha to‘lovlari.  
+
+---
+
+## 6. Attendance & Grades (app_attendance)
+
+### Attendance
+
+#### Get All Attendance
+**Endpoint:** `GET /attendance/`  
+**Description:** Barcha davomat ma’lumotlari.  
+
+#### Get Student Attendance
+**Endpoint:** `GET /attendance/{id}/`  
+**Description:** Talabaning davomat tafsilotlari.  
+
+#### Mark Attendance
+**Endpoint:** `POST /attendance/mark/`  
+**Description:** Talabaning davomatini belgilash.  
+
+### Grades
+
+#### Get All Grades
+**Endpoint:** `GET /grades/`  
+**Description:** Barcha baholar.  
+
+#### Get Student Grades
+**Endpoint:** `GET /grades/{id}/`  
+**Description:** Talabaning baholari.  
+
+#### Add Grade
+**Endpoint:** `POST /grades/add/`  
+**Description:** Yangi baho qo‘shish.  
+
+#### Update Grade
+**Endpoint:** `PUT /grades/{id}/update/`  
+**Description:** Baho o‘zgartirish.
