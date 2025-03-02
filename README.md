@@ -26,7 +26,7 @@
 ## 2. Users (app_users)
 
 ### Get All Users
-**Endpoint:** `GET /users/users/`  
+**Endpoint:** `GET /users/`  
 **Description:** Barcha foydalanuvchilar ro‘yxatini olish.  
 
 ### Get Single User
@@ -34,15 +34,15 @@
 **Description:** Foydalanuvchi ma’lumotlarini olish.  
 
 ### Create User
-**Endpoint:** `POST /users/`  
+**Endpoint:** `POST /users/create/user/`  
 **Description:** Yangi foydalanuvchi yaratish (Admin tomonidan).  
 
 ### Update User
-**Endpoint:** `PUT /users/{id}/`  
+**Endpoint:** `PUT /users/{id}/update/`  
 **Description:** Foydalanuvchi ma’lumotlarini yangilash.  
 
 ### Delete User
-**Endpoint:** `DELETE /users/{id}/`  
+**Endpoint:** `DELETE /users/{id}/delete/`  
 **Description:** Foydalanuvchini o‘chirish.  
 
 ### Workers
