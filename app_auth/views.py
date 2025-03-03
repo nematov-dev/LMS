@@ -1,4 +1,3 @@
-from idlelib.pyparse import trans
 from random import randint
 
 from django.core.cache import cache

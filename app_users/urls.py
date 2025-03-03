@@ -5,12 +5,15 @@ from app_users.views import TeacherCreateAPIView, TeacherListView, TeacherUpdate
     StudentUpdateView, \
     StudentCreateAPIView, WorkerListView, WorkerUpdateView, WorkerCreateAPIView, WorkerRetrieveAPIView, \
     TeacherRetrieveAPIView, StudentRetrieveAPIView, \
-    UserListView, UserDetailView, UserCreateView, UserUpdateView, UserDeleteView, DepartmentViewSet
+    UserListView, UserDetailView, UserCreateView, UserUpdateView, UserDeleteView, DepartmentViewSet, ParentViewSet
 
 app_name = 'users'
 
 router = DefaultRouter()
 router.register(r'departments', DepartmentViewSet, basename='department')
+
+router2 = DefaultRouter()
+router2.register(r'parents', ParentViewSet, basename='parent')
 
 
 urlpatterns = [
@@ -41,4 +44,8 @@ urlpatterns = [
 
     #department
     path('', include(router.urls)),
+
+    #parent
+    path('',include(router2.urls)),
+
 ]

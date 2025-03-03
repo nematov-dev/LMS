@@ -2,7 +2,8 @@ from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 
 
-from app_users.models import Teacher, User, Student, Worker,Department
+from app_users.models import Teacher, User, Student, Worker, Department, Parent
+
 
 class UserAllSerializer(serializers.ModelSerializer):
     class Meta:
@@ -40,6 +41,11 @@ class WorkerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Worker
         fields = ('id','user','departments','description')
+
+class ParentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Parent
+        fields = "__all__"
 
 class DepartamentAddWorker(serializers.Serializer):
     worker_id = serializers.IntegerField()

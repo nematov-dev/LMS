@@ -140,6 +140,28 @@
 **Endpoint:** `POST /users/departments/{id}/add-worker/`  
 **Description:** Bo‘limga worker qo'shish.
 
+## 4. Parents
+
+### Get All Parents
+**Endpoint:** `GET users/parents/`  
+**Description:** Barcha ota-onalar ro‘yxatini olish.  
+
+### Get Single Parent
+**Endpoint:** `GET users/parents/{id}/`  
+**Description:** Bitta ota-ona ma’lumotlarini olish.  
+
+### Create Parent
+**Endpoint:** `POST /users/parents/create/parent/`  
+**Description:** Yangi bo‘lim yaratish.  
+
+### Update Parent
+**Endpoint:** `PUT /users/parents/{id}/update/parent/`  
+**Description:** Ota-ona ma’lumotlarini yangilash.
+
+### Delete Parent
+**Endpoint:** `DELETE /users/parents/{id}/delete/parent/`  
+**Description:** Ota-onalar ma’lumotlarini o'chirish.
+
 ---
 
 ## 4. Courses & Groups (app_courses)

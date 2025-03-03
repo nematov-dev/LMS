@@ -1,4 +1,4 @@
-from django.core import cache
+from django.core.cache import cache
 from rest_framework import serializers
 
 from app_users.models import User
@@ -35,9 +35,8 @@ class VerifyOTPSerializer(serializers.Serializer):
         phone = data.get('phone')
         otp = data.get('otp')
         cached_data = cache.get(phone)
-        if not cached_data or cached_data.get('otp') != otp:
+        if not cached_data or str(cached_data) != otp:
             raise serializers.ValidationError("Noto‘g‘ri yoki eskirgan OTP")
-
         return data
 
 class SetNewPasswordSerializer(serializers.Serializer):

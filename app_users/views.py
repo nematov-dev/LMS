@@ -8,9 +8,9 @@ from rest_framework.pagination import PageNumberPagination
 
 from app_users.permissions import AdminUser
 from app_users.serializers import TeacherSerializer, UserSerializer, StudentSerializer, UserAndTeacherSerializer, \
-    UserAndStudentSerializer, \
+    UserAndStudentSerializer, ParentSerializer,\
     WorkerSerializer, UserAndWorkerSerializer, UserAllSerializer, DepartmentSerializer, DepartamentAddWorker
-from app_users.models import Teacher,Student,Worker,User,Department
+from app_users.models import Teacher,Student,Worker,User,Department,Parent
 
 class Pagination(PageNumberPagination):
     page_size = 20
@@ -228,4 +228,44 @@ class WorkerCreateAPIView(APIView):
         else:
             user.delete()
             return Response(worker_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#Parrent
+class ParentViewSet(viewsets.ViewSet):
+    permission_classes = [AdminUser]
+
+    def list(self, request):
+        parents = Parent.objects.all()
+        paginator = Pagination()
+        result_page = paginator.paginate_queryset(parents, request)
+        serializer = ParentSerializer(result_page, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        parent = get_object_or_404(Parent, pk=pk)
+        serializer = ParentSerializer(parent)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['post'], url_path='create/parent')
+    @swagger_auto_schema(request_body=ParentSerializer)
+    def create_parent(self, request):
+        serializer = ParentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['put'], url_path='update/parent')
+    def update_parent(self, request, pk=None):
+        parent = get_object_or_404(Parent, pk=pk)
+        serializer = ParentSerializer(parent, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['delete'], url_path='delete/parent')
+    def delete_parent(self, request, pk=None):
+        parent = get_object_or_404(Parent, pk=pk)
+        parent.delete()
+        return Response({'status':True,'detail': 'Parent muaffaqiatli uchirildi'}, status=status.HTTP_204_NO_CONTENT)
 
