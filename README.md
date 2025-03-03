@@ -16,12 +16,25 @@
 
 ### Reset Password
 **Endpoint:** `POST /auth/reset-password/`  
-**Description:** Parolni tiklash (OTP orqali).  
+**Description:** Parolni tiklash (OTP yuboradi).
+
+### OTP verify
+**Endpoint:** `POST /auth/verify-otp/`  
+**Description:** OTP ni tasdiqlash.
+
+### Set new password
+**Endpoint:** `POST /auth/set-new-password/`  
+**Description:** Yangi parolni saqlash.
 
 ### Get Current User
 **Endpoint:** `GET /auth/me/`  
 **Description:** Hozirgi foydalanuvchi ma’lumotlarini olish.  
 
+### Token Refresh
+**Endpoint:** `POST /auth/token/refresh/`  
+**Description:** JWT yangilash . 
+
+---
 
 ## 2. Users (app_users)
 
@@ -30,7 +43,7 @@
 **Description:** Barcha foydalanuvchilar ro‘yxatini olish.  
 
 ### Get Single User
-**Endpoint:** `GET /users/{id}/`  
+**Endpoint:** `GET /user/{id}/`  
 **Description:** Foydalanuvchi ma’lumotlarini olish.  
 
 ### Create User
@@ -38,11 +51,11 @@
 **Description:** Yangi foydalanuvchi yaratish (Admin tomonidan).  
 
 ### Update User
-**Endpoint:** `PUT /users/{id}/update/`  
+**Endpoint:** `PUT users/update/user/{id}/`  
 **Description:** Foydalanuvchi ma’lumotlarini yangilash.  
 
 ### Delete User
-**Endpoint:** `DELETE /users/{id}/delete/`  
+**Endpoint:** `DELETE /users/delete/user/{id}/`  
 **Description:** Foydalanuvchini o‘chirish.  
 
 ### Workers
@@ -104,24 +117,28 @@
 ## 3. Departments
 
 ### Get All Departments
-**Endpoint:** `GET /departments/`  
+**Endpoint:** `GET users/departments/`  
 **Description:** Barcha bo‘limlar ro‘yxatini olish.  
 
 ### Get Single Department
-**Endpoint:** `GET /departments/{id}/`  
+**Endpoint:** `GET users/departments/{id}/`  
 **Description:** Bitta bo‘lim ma’lumotlarini olish.  
 
 ### Create Department
-**Endpoint:** `POST /departments/create/`  
+**Endpoint:** `POST /users/departments/create/department/`  
 **Description:** Yangi bo‘lim yaratish.  
 
 ### Update Department
-**Endpoint:** `PUT /departments/update/{id}/`  
-**Description:** Bo‘lim ma’lumotlarini yangilash.  
+**Endpoint:** `PUT /users/departments/{id}/update/department/`  
+**Description:** Bo‘lim ma’lumotlarini yangilash.
 
 ### Delete Department
-**Endpoint:** `DELETE /departments/delete/{id}/`  
-**Description:** Bo‘limni o‘chirish.  
+**Endpoint:** `DELETE /users/departments/{id}/delete/department/`  
+**Description:** Bo‘lim ma’lumotlarini o'chirish.
+
+### Department add Worker
+**Endpoint:** `POST /users/departments/{id}/add-worker/`  
+**Description:** Bo‘limga worker qo'shish.
 
 ---
 

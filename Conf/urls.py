@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import re_path
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -20,9 +19,12 @@ schema_view = get_schema_view(
    permission_classes=(permissions.AllowAny,),
 )
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/users/',include('app_users.urls',namespace='users')),
+    path('api/v1/auth/', include('app_auth.urls', namespace='auth')),
 
     #swagger
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
