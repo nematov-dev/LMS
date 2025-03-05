@@ -37,8 +37,8 @@ class TableType(BaseModel):
         verbose_name_plural = 'Table Types'
 
 class Table(BaseModel):
-    start_time = models.TimeField()
-    finish_time = models.TimeField()
+    start_time = models.CharField(max_length=50)
+    finish_time = models.CharField(max_length=50)
     room = models.CharField(max_length=50)
     description = models.TextField(null=True, blank=True)
     type = models.ForeignKey(TableType, on_delete=models.CASCADE, related_name='tables')

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 
-
+from app_courses.serializers import GroupSerializer
 from app_users.models import Teacher, User, Student, Worker, Department, Parent
 
 
@@ -30,17 +30,38 @@ class TeacherSerializer(serializers.ModelSerializer):
         model = Teacher
         fields = ('id','user','group', 'cource', 'description')
 
+class TeacherGroupSerializer(serializers.ModelSerializer):
+    group = GroupSerializer(many=True)
+
+    class Meta:
+        model = Teacher
+        fields = ['group']
+
 class StudentSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Student
         fields = ('id','user','group', 'cource', 'description')
 
+class StudentGroupSerializer(serializers.ModelSerializer):
+    group = GroupSerializer(many=True)
+
+    class Meta:
+        model = Student
+        fields = ['group']
+
 class WorkerSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Worker
         fields = ('id','user','departments','description')
+
+class WorkerDepartamentSerializer(serializers.ModelSerializer):
+    departments = DepartmentSerializer(many=True)
+
+    class Meta:
+        model = Worker
+        fields = ['departments']
 
 class ParentSerializer(serializers.ModelSerializer):
     class Meta:

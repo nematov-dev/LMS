@@ -6,16 +6,14 @@ from rest_framework import status, generics, viewsets
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.pagination import PageNumberPagination
 
-from app_users.permissions import AdminUser
+from app_common.permissions import AdminUser
+from app_common.pagination import Pagination
 from app_users.serializers import TeacherSerializer, UserSerializer, StudentSerializer, UserAndTeacherSerializer, \
-    UserAndStudentSerializer, ParentSerializer,\
-    WorkerSerializer, UserAndWorkerSerializer, UserAllSerializer, DepartmentSerializer, DepartamentAddWorker
+    UserAndStudentSerializer, ParentSerializer, \
+    WorkerSerializer, UserAndWorkerSerializer, UserAllSerializer, DepartmentSerializer, DepartamentAddWorker, \
+    TeacherGroupSerializer, StudentGroupSerializer, WorkerDepartamentSerializer
 from app_users.models import Teacher,Student,Worker,User,Department,Parent
 
-class Pagination(PageNumberPagination):
-    page_size = 20
-    page_size_query_param = 'page_size'
-    max_page_size = 50 
 
 #User
 class UserListView(generics.ListAPIView):
@@ -145,6 +143,12 @@ class TeacherCreateAPIView(APIView):
             user.delete()
             return Response(teacher_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class TeacherGroupsAPIView(APIView):
+    def get(self, request, teacher_id):
+        teacher = Teacher.objects.get(id=teacher_id)
+        serializer = TeacherGroupSerializer(teacher)
+        return Response(serializer.data)
+
 #Student
 class StudentListView(ListAPIView):
     queryset = Student.objects.all()
@@ -187,6 +191,12 @@ class StudentCreateAPIView(APIView):
             user.delete()
             return Response(student_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class StudentGroupsAPIView(APIView):
+    def get(self, request, student_id):
+        student = Student.objects.get(id=student_id)
+        serializer = StudentGroupSerializer(student)
+        return Response(serializer.data)
+
 #Worker
 class WorkerListView(ListAPIView):
     queryset = Worker.objects.all()
@@ -228,6 +238,12 @@ class WorkerCreateAPIView(APIView):
         else:
             user.delete()
             return Response(worker_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class WorkerDepartamentsAPIView(APIView):
+    def get(self, request, worker_id):
+        worker = Worker.objects.get(id=worker_id)
+        serializer = WorkerDepartamentSerializer(worker)
+        return Response(serializer.data)
 
 #Parrent
 class ParentViewSet(viewsets.ViewSet):

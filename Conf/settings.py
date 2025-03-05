@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'drf_spectacular',
     'drf_spectacular_sidecar',
+    'django_extensions',
+
 
     #local apps
     'app_users',

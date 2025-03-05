@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/users/',include('app_users.urls',namespace='users')),
     path('api/v1/auth/', include('app_auth.urls', namespace='auth')),
+    path('api/v1/courses/',include('app_courses.urls',namespace='courses')),
 
     #swagger
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),

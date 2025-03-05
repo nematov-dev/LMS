@@ -5,7 +5,8 @@ from app_users.views import TeacherCreateAPIView, TeacherListView, TeacherUpdate
     StudentUpdateView, \
     StudentCreateAPIView, WorkerListView, WorkerUpdateView, WorkerCreateAPIView, WorkerRetrieveAPIView, \
     TeacherRetrieveAPIView, StudentRetrieveAPIView, \
-    UserListView, UserDetailView, UserCreateView, UserUpdateView, UserDeleteView, DepartmentViewSet, ParentViewSet
+    UserListView, UserDetailView, UserCreateView, UserUpdateView, UserDeleteView, DepartmentViewSet, ParentViewSet, \
+    TeacherGroupsAPIView, StudentGroupsAPIView, WorkerDepartamentsAPIView
 
 app_name = 'users'
 
@@ -29,18 +30,21 @@ urlpatterns = [
     path('worker/<int:id>/',WorkerRetrieveAPIView.as_view(),name="worker"),
     path('create/worker/',WorkerCreateAPIView.as_view(),name='add_worker'),
     path('update/worker/<int:id>/',WorkerUpdateView.as_view(),name="update_worker"),
+    path('worker-departaments/<int:worker_id>/', WorkerDepartamentsAPIView.as_view(), name="worker_departaments"),
 
     #teacher
     path('teachers/',TeacherListView.as_view(),name="all_teachers"),
     path('teacher/<int:id>/',TeacherRetrieveAPIView.as_view(),name="teacher"),
     path('create/teacher/',TeacherCreateAPIView.as_view(),name='add_teacher'),
     path('update/teacher/<int:id>/',TeacherUpdateView.as_view(),name="update_teacher"),
+    path('teacher-groups/<int:teacher_id>/',TeacherGroupsAPIView.as_view(),name="teacher_groups"),
 
     #student
     path('students/',StudentListView.as_view(),name="all_students"),
     path('student/<int:id>/',StudentRetrieveAPIView.as_view(),name="student"),
     path('create/student/',StudentCreateAPIView.as_view(),name='add_student'),
     path('update/student/<int:id>/',StudentUpdateView.as_view(),name="update_student"),
+    path('student-groups/<int:student_id>/', StudentGroupsAPIView.as_view(), name="student_groups"),
 
     #department
     path('', include(router.urls)),
