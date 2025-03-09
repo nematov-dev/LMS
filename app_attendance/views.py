@@ -57,7 +57,7 @@ class AttendanceViewSet(viewsets.ViewSet):
         attendances = Attendance.objects.all()
         paginator = Pagination()
         result_page = paginator.paginate_queryset(attendances, request)
-        serializer = StatusSerializer(result_page, many=True)
+        serializer = AttendanceSerializer(result_page, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):

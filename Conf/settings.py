@@ -159,3 +159,15 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
 }
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': 'Enter JWT token like this: Bearer <your-token>',
+        }
+    },
+    'USE_SESSION_AUTH': False,  # Session auth ni o‘chirib qo‘yish (faqat token ishlatish)
+}
