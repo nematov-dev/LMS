@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from app_payments.models import Payment, PaymentType, Month
+
+admin.site.register([Payment,PaymentType,Month])

@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
-
-from app_courses.serializers import GroupSerializer
-from app_users.models import Teacher, User, Student, Worker, Department, Parent
+from app_users.models import Teacher, User, Student, Parent
 
 
 class UserAllSerializer(serializers.ModelSerializer):
@@ -19,23 +17,11 @@ class UserSerializer(serializers.ModelSerializer):
         validated_data['password'] = make_password(validated_data['password'])
         return super().create(validated_data)
 
-class DepartmentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Department
-        fields = "__all__"
-
 class TeacherSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
     class Meta:
         model = Teacher
-        fields = ('id','user','group', 'cource', 'description')
-
-class TeacherGroupSerializer(serializers.ModelSerializer):
-    group = GroupSerializer(many=True)
-
-    class Meta:
-        model = Teacher
-        fields = ['group']
+        fields = ('id','user', 'cource', 'description')
 
 class StudentSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(read_only=True)
@@ -43,33 +29,18 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         fields = ('id','user','group', 'cource', 'description')
 
-class StudentGroupSerializer(serializers.ModelSerializer):
-    group = GroupSerializer(many=True)
-
-    class Meta:
-        model = Student
-        fields = ['group']
-
-class WorkerSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(read_only=True)
-    class Meta:
-        model = Worker
-        fields = ('id','user','departments','description')
-
-class WorkerDepartamentSerializer(serializers.ModelSerializer):
-    departments = DepartmentSerializer(many=True)
-
-    class Meta:
-        model = Worker
-        fields = ['departments']
-
 class ParentSerializer(serializers.ModelSerializer):
+    students = StudentSerializer(many=True,read_only=True)
+
     class Meta:
         model = Parent
-        fields = "__all__"
+        fields = ('id','name','surname','address','phone','description','students')
 
-class DepartamentAddWorker(serializers.Serializer):
-    worker_id = serializers.IntegerField()
+class GetStudentsByIdsSerializer(serializers.Serializer):
+    student_ids = serializers.ListField(child=serializers.IntegerField())
+
+class GetTeachersByIdsSerializer(serializers.Serializer):
+    teacher_ids = serializers.ListField(child=serializers.IntegerField())
 
 class UserAndTeacherSerializer(serializers.Serializer):
     user = UserSerializer()
@@ -78,7 +49,4 @@ class UserAndTeacherSerializer(serializers.Serializer):
 class UserAndStudentSerializer(serializers.Serializer):
     user = UserSerializer()
     student = StudentSerializer()
-
-class UserAndWorkerSerializer(serializers.Serializer):
-    user = UserSerializer()
-    worker = WorkerSerializer()
+    parent = ParentSerializer()

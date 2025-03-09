@@ -1,3 +1,5 @@
+from idlelib.configdialog import tracers
+
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import RegexValidator
@@ -36,7 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
-    is_worker = models.BooleanField(default=False)
+    is_teacher = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     username = None
@@ -54,34 +56,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     def has_module_perms(self, app_label):
         return self.is_admin
 
-class Department(BaseModel):
-    title = models.CharField(max_length=50)
-    description = models.TextField(null=True, blank=True)
-    is_active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = 'Department'
-        verbose_name_plural = 'Departments'
-
-class Worker(BaseModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    departments = models.ManyToManyField('Department',related_name='worker')
-    description = models.TextField(null=True, blank=True)
-
-    def __str__(self):
-        return self.user.phone
-
-    class Meta:
-        verbose_name = 'Worker'
-        verbose_name_plural = 'Workers'
-
 class Student(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    group = models.ManyToManyField('app_courses.Group', related_name='student',null=True,blank=True)
-    cource = models.ManyToManyField('app_courses.Course',related_name='student',null=True,blank=True)
+    group = models.ManyToManyField('app_courses.Group', related_name='g_student',null=True,blank=True)
+    cource = models.ManyToManyField('app_courses.Course',related_name='c_student')
     description = models.TextField(null=True, blank=True)
 
     def __str__(self):
@@ -93,9 +71,8 @@ class Student(BaseModel):
 
 class Teacher(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    group = models.ManyToManyField('app_courses.Group', related_name='t_student',null=True,blank=True)
     description = models.TextField(null=True, blank=True)
-    cource = models.ManyToManyField('app_courses.Course',related_name='t_student',null=True,blank=True)
+    cource = models.ManyToManyField('app_courses.Course',related_name='c_teacher')
 
     def __str__(self):
         return self.user.phone

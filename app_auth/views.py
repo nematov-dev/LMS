@@ -1,6 +1,8 @@
+from lib2to3.pgen2.tokenize import group
 from random import randint
 
 from django.core.cache import cache
+from django.template.context_processors import request
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.generics import RetrieveAPIView
@@ -38,7 +40,6 @@ class CurrentUserView(RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
-
 
 class ChangePasswordView(APIView):
     permission_classes = [IsAuthenticated]
