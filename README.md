@@ -1,267 +1,221 @@
-# API Endpoints
+# API Documentation
 
-## 1. Auth (app_auth)
-
-### Login
-**Endpoint:** `POST /auth/login/`  
-**Description:** Kirish.  
-
-### Logout
-**Endpoint:** `POST /auth/logout/`  
-**Description:** Chiqish.  
+## Authentication APIs
 
 ### Change Password
-**Endpoint:** `POST /auth/change-password/`  
-**Description:** Parolni o‘zgartirish.  
+
+**POST** `/auth/change-password/`
+
+- Change user password.
+
+### Login
+
+**POST** `/auth/login/`
+
+- Authenticate user and return access token.
+
+### Logout
+
+**POST** `/auth/logout/`
+
+- Logout user by invalidating the token.
+
+### Get User Info
+
+**GET** `/auth/me/`
+
+- Retrieve logged-in user information.
 
 ### Reset Password
-**Endpoint:** `POST /auth/reset-password/`  
-**Description:** Parolni tiklash (OTP yuboradi).
 
-### OTP verify
-**Endpoint:** `POST /auth/verify-otp/`  
-**Description:** OTP ni tasdiqlash.
+**POST** `/auth/reset-password/`
 
-### Set new password
-**Endpoint:** `POST /auth/set-new-password/`  
-**Description:** Yangi parolni saqlash.
+- Request password reset.
 
-### Get Current User
-**Endpoint:** `GET /auth/me/`  
-**Description:** Hozirgi foydalanuvchi ma’lumotlarini olish.  
+### Set New Password
 
-### Token Refresh
-**Endpoint:** `POST /auth/token/refresh/`  
-**Description:** JWT yangilash . 
+**POST** `/auth/set-new-password/`
 
----
+- Set a new password after reset.
 
-## 2. Users (app_users)
+### Refresh Token
 
-### Get All Users
-**Endpoint:** `GET /users/`  
-**Description:** Barcha foydalanuvchilar ro‘yxatini olish.  
+**POST** `/auth/token/refresh/`
 
-### Get Single User
-**Endpoint:** `GET /user/{id}/`  
-**Description:** Foydalanuvchi ma’lumotlarini olish.  
+- Refresh authentication token.
 
-### Create User
-**Endpoint:** `POST /users/create/user/`  
-**Description:** Yangi foydalanuvchi yaratish (Admin tomonidan).  
+### Verify OTP
 
-### Update User
-**Endpoint:** `PUT users/update/user/{id}/`  
-**Description:** Foydalanuvchi ma’lumotlarini yangilash.  
+**POST** `/auth/verify-otp/`
 
-### Delete User
-**Endpoint:** `DELETE /users/delete/user/{id}/`  
-**Description:** Foydalanuvchini o‘chirish.  
-
-### Workers
-
-#### Get All Workers
-**Endpoint:** `GET /users/workers/`  
-**Description:** Barcha workerlar ro‘yxati.  
-
-#### Get Single Worker
-**Endpoint:** `GET /users/worker/{id}/`  
-**Description:** Bitta worker ma’lumotlari.  
-
-#### Create Worker
-**Endpoint:** `POST /users/workers/create/`  
-**Description:** Yangi worker yaratish.  
-
-#### Update Worker
-**Endpoint:** `PUT /users/workers/{id}/update/`  
-**Description:** Worker ma’lumotlarini o‘zgartirish.  
-
-### Teachers
-
-#### Get All Teachers
-**Endpoint:** `GET /users/teachers/`  
-**Description:** Barcha o‘qituvchilar ro‘yxatini olish.  
-
-#### Get Single Teacher
-**Endpoint:** `GET /users/teacher/{id}/`  
-**Description:** Bitta o‘qituvchi ma’lumotlarini olish.  
-
-#### Create Teacher
-**Endpoint:** `POST /users/create/teacher/`  
-**Description:** Yangi o‘qituvchi yaratish.  
-
-#### Update Teacher
-**Endpoint:** `PUT /users/update/teacher/{id}/`  
-**Description:** O‘qituvchi ma’lumotlarini yangilash.  
-
-### Students
-
-#### Get All Students
-**Endpoint:** `GET /users/students/`  
-**Description:** Barcha talabalar ro‘yxatini olish.  
-
-#### Get Single Student
-**Endpoint:** `GET /users/student/{id}/`  
-**Description:** Bitta talaba ma’lumotlarini olish.  
-
-#### Create Student
-**Endpoint:** `POST /users/create/student/`  
-**Description:** Yangi talaba yaratish.  
-
-#### Update Student
-**Endpoint:** `PUT /users/update/student/{id}/`  
-**Description:** Talaba ma’lumotlarini yangilash.  
+- Verify OTP for authentication.
 
 ---
 
-## 3. Departments
+## Attendance APIs
 
-### Get All Departments
-**Endpoint:** `GET users/departments/`  
-**Description:** Barcha bo‘limlar ro‘yxatini olish.  
+### List Attendances
 
-### Get Single Department
-**Endpoint:** `GET users/departments/{id}/`  
-**Description:** Bitta bo‘lim ma’lumotlarini olish.  
+**GET** `/attendances/attendance/`
 
-### Create Department
-**Endpoint:** `POST /users/departments/create/department/`  
-**Description:** Yangi bo‘lim yaratish.  
+- Retrieve all attendance records.
 
-### Update Department
-**Endpoint:** `PUT /users/departments/{id}/update/department/`  
-**Description:** Bo‘lim ma’lumotlarini yangilash.
+### Create Attendance
 
-### Delete Department
-**Endpoint:** `DELETE /users/departments/{id}/delete/department/`  
-**Description:** Bo‘lim ma’lumotlarini o'chirish.
+**POST** `/attendances/attendance/create/attendance/`
 
-### Department add Worker
-**Endpoint:** `POST /users/departments/{id}/add-worker/`  
-**Description:** Bo‘limga worker qo'shish.
+- Create a new attendance record.
 
-## 4. Parents
+### Retrieve Attendance by ID
 
-### Get All Parents
-**Endpoint:** `GET users/parents/`  
-**Description:** Barcha ota-onalar ro‘yxatini olish.  
+**GET** `/attendances/attendance/{id}/`
 
-### Get Single Parent
-**Endpoint:** `GET users/parents/{id}/`  
-**Description:** Bitta ota-ona ma’lumotlarini olish.  
+- Retrieve attendance details by ID.
 
-### Create Parent
-**Endpoint:** `POST /users/parents/create/parent/`  
-**Description:** Yangi bo‘lim yaratish.  
+### Delete Attendance
 
-### Update Parent
-**Endpoint:** `PUT /users/parents/{id}/update/parent/`  
-**Description:** Ota-ona ma’lumotlarini yangilash.
+**DELETE** `/attendances/attendance/{id}/delete/attendance/`
 
-### Delete Parent
-**Endpoint:** `DELETE /users/parents/{id}/delete/parent/`  
-**Description:** Ota-onalar ma’lumotlarini o'chirish.
+- Delete an attendance record.
+
+### Update Attendance
+
+**PUT** `/attendances/attendance/{id}/update/attendance/`
+
+- Update an attendance record.
+
+### Attendance Status APIs
+
+- **GET** `/attendances/status/` - List all statuses.
+- **POST** `/attendances/status/create/status/` - Create new status.
+- **GET** `/attendances/status/{id}/` - Get status details.
+- **DELETE** `/attendances/status/{id}/delete/status/` - Delete status.
+- **PUT** `/attendances/status/{id}/update/status/` - Update status.
 
 ---
 
-## 4. Courses & Groups (app_courses)
+## Courses APIs
 
 ### Courses
 
-#### Get All Courses
-**Endpoint:** `GET /courses/`  
-**Description:** Barcha kurslar ro‘yxatini olish.  
-
-#### Get Course Details
-**Endpoint:** `GET /courses/{id}/`  
-**Description:** Kurs tafsilotlarini olish.  
-
-#### Create Course
-**Endpoint:** `POST /courses/create/`  
-**Description:** Yangi kurs yaratish.  
-
-#### Update Course
-**Endpoint:** `PUT /courses/{id}/update/`  
-**Description:** Kurs ma’lumotlarini o‘zgartirish.  
-
-#### Delete Course
-**Endpoint:** `DELETE /courses/{id}/delete/`  
-**Description:** Kursni o‘chirish.  
+- **GET** `/courses/courses/` - List all courses.
+- **POST** `/courses/courses/create/course/` - Create a new course.
+- **GET** `/courses/courses/{id}/` - Get course details.
+- **DELETE** `/courses/courses/{id}/delete/course/` - Delete a course.
+- **PUT** `/courses/courses/{id}/update/course/` - Update course.
 
 ### Groups
 
-#### Get All Groups
-**Endpoint:** `GET /groups/`  
-**Description:** Barcha guruhlar ro‘yxatini olish.  
-
-#### Get Group Details
-**Endpoint:** `GET /groups/{id}/`  
-**Description:** Guruh tafsilotlarini olish.  
-
-#### Create Group
-**Endpoint:** `POST /groups/create/`  
-**Description:** Yangi guruh yaratish.  
-
-#### Add Student to Group
-**Endpoint:** `POST /groups/{id}/add-student/`  
-**Description:** Talabani guruhga qo‘shish.  
-
-#### Remove Student from Group
-**Endpoint:** `DELETE /groups/{id}/remove-student/`  
-**Description:** Talabani guruhdan chiqarish.  
+- **GET** `/courses/groups/` - List all groups.
+- **POST** `/courses/groups/create/group/` - Create a new group.
+- **GET** `/courses/groups/{id}/` - Get group details.
+- **POST** `/courses/groups/{id}/add-student/` - Add student to group.
+- **POST** `/courses/groups/{id}/add-teacher/` - Add teacher to group.
+- **DELETE** `/courses/groups/{id}/delete/group/` - Delete group.
+- **POST** `/courses/groups/{id}/remove-student/` - Remove student from group.
+- **POST** `/courses/groups/{id}/remove-teacher/` - Remove teacher from group.
+- **PUT** `/courses/groups/{id}/update/group/` - Update group.
 
 ---
 
-## 5. Payments (app_payments)
+## Payments APIs
 
-### Get All Payments
-**Endpoint:** `GET /payments/`  
-**Description:** Barcha to‘lovlar.  
+### Payment Management
 
-### Get Payment Details
-**Endpoint:** `GET /payments/{id}/`  
-**Description:** To‘lov tafsilotlari.  
+- **GET** `/payments/payment/` - List all payments.
+- **POST** `/payments/payment/create/payment/` - Create a new payment.
+- **GET** `/payments/payment/{id}/` - Get payment details.
+- **DELETE** `/payments/payment/{id}/delete/payment/` - Delete a payment.
+- **PUT** `/payments/payment/{id}/update/payment/` - Update payment details.
 
-### Create Payment
-**Endpoint:** `POST /payments/create/`  
-**Description:** Yangi to‘lov qilish.  
+### Payment Types
 
-### Get Student Payments
-**Endpoint:** `GET /payments/student/{id}/`  
-**Description:** Talabaning barcha to‘lovlari.  
+- **GET** `/payments/payment-type/` - List payment types.
+- **POST** `/payments/payment-type/create/payment-type/` - Create new payment type.
+- **GET** `/payments/payment-type/{id}/` - Get payment type details.
+- **DELETE** `/payments/payment-type/{id}/delete/payment-type/` - Delete payment type.
+- **PUT** `/payments/payment-type/{id}/update/payment-type/` - Update payment type.
 
 ---
 
-## 6. Attendance & Grades (app_attendance)
+## Statistics APIs
 
-### Attendance
+### Attendance Statistics
 
-#### Get All Attendance
-**Endpoint:** `GET /attendance/`  
-**Description:** Barcha davomat ma’lumotlari.  
+**GET** `/statistics/attendance-statistics/`
 
-#### Get Student Attendance
-**Endpoint:** `GET /attendance/{id}/`  
-**Description:** Talabaning davomat tafsilotlari.  
+- Get attendance statistics.
 
-#### Mark Attendance
-**Endpoint:** `POST /attendance/mark/`  
-**Description:** Talabaning davomatini belgilash.  
+### Courses Statistics
 
-### Grades
+**GET** `/statistics/courses-statistics/`
 
-#### Get All Grades
-**Endpoint:** `GET /grades/`  
-**Description:** Barcha baholar.  
+- Get courses statistics.
 
-#### Get Student Grades
-**Endpoint:** `GET /grades/{id}/`  
-**Description:** Talabaning baholari.  
+### Groups Statistics
 
-#### Add Grade
-**Endpoint:** `POST /grades/add/`  
-**Description:** Yangi baho qo‘shish.  
+**GET** `/statistics/groups-statistics/`
 
-#### Update Grade
-**Endpoint:** `PUT /grades/{id}/update/`  
-**Description:** Baho o‘zgartirish.
+- Get group statistics.
+
+### Payments Statistics
+
+**GET** `/statistics/payments-statistics/`
+
+- Get payments statistics.
+
+### Students Statistics
+
+**GET** `/statistics/students-statistic/`
+
+- Get students statistics.
+
+### Teachers Statistics
+
+**GET** `/statistics/teachers-statistic/`
+
+- Get teachers statistics.
+
+---
+
+## Users APIs
+
+### User Management
+
+- **GET** `/users/` - List all users.
+- **POST** `/users/create/student/` - Create a new student.
+- **POST** `/users/create/teacher/` - Create a new teacher.
+- **POST** `/users/create/user/` - Create a new user.
+- **DELETE** `/users/delete/user/{id}/` - Delete user.
+
+### Get Users by ID
+
+- **POST** `/users/get-students-by-ids/` - Get students by IDs.
+- **POST** `/users/get-teachers-by-ids/` - Get teachers by IDs.
+
+### Student Management
+
+- **GET** `/users/students/` - List all students.
+- **GET** `/users/student/{id}/` - Get student details.
+- **PUT** `/users/update/student/{id}/` - Update student.
+
+### Teacher Management
+
+- **GET** `/users/teachers/` - List all teachers.
+- **GET** `/users/teacher/{id}/` - Get teacher details.
+- **PUT** `/users/update/teacher/{id}/` - Update teacher.
+
+---
+
+## Notes
+
+- `{id}` should be replaced with the actual ID of the resource.
+- Use appropriate HTTP methods (GET, POST, PUT, DELETE) as per the endpoint.
+- Ensure authentication for protected routes.
+
+---
+
+## Contact
+
+For further questions, contact the developer nematov.uz
+
