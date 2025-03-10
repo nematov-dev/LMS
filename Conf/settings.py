@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'drf_spectacular_sidecar',
     'django_extensions',
+    'rest_framework_simplejwt.token_blacklist',
 
 
     #local apps
