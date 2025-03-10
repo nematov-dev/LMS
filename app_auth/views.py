@@ -33,6 +33,18 @@ class LoginAPIView(APIView):
 
         return Response({"status":False,"detail": "Telefon raqam yoki parol noto‘g‘ri"}, status=status.HTTP_401_UNAUTHORIZED)
 
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()  # Tokenni qora ro‘yxatga qo‘shish
+            return Response({"message": "Logout successful"}, status=200)
+        except Exception as e:
+            return Response({"error": str(e)}, status=400)
+
 class CurrentUserView(RetrieveAPIView):
     serializer_class = MeSerializer
     permission_classes = [IsAuthenticated]
