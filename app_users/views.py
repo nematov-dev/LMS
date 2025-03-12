@@ -11,11 +11,23 @@ from app_courses.models import Group
 from app_courses.serializers import GroupSerializer
 from app_users.serializers import TeacherSerializer, UserSerializer, StudentSerializer, UserAndTeacherSerializer, \
     UserAndStudentSerializer, ParentSerializer, UserAllSerializer, GetStudentsByIdsSerializer, \
-    GetTeachersByIdsSerializer
+    GetTeachersByIdsSerializer, SuperUserSerializer
 from app_users.models import Teacher,Student,User,Parent
 
 
 #User
+
+class CreateSuperAdminView(APIView):
+    permission_classes = [AdminUser]
+
+    @swagger_auto_schema(request_body=SuperUserSerializer)
+    def post(self, request):
+        serializer = SuperUserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Superadmin successfully created"}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserAllSerializer

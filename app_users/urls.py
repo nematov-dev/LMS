@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 from app_users.views import TeacherCreateAPIView, TeacherListView, TeacherUpdateView, StudentListView, \
     StudentUpdateView, StudentCreateAPIView, TeacherRetrieveAPIView, StudentRetrieveAPIView, \
     UserListView, UserDetailView, UserCreateView, UserUpdateView, UserDeleteView, ParentViewSet, \
-    TeacherGroupsAPIView, StudentGroupsAPIView, GetStudentsByIds, GetTeachersByIds
+    TeacherGroupsAPIView, StudentGroupsAPIView, GetStudentsByIds, GetTeachersByIds, CreateSuperAdminView
 
 app_name = 'users'
 
@@ -13,6 +13,8 @@ router.register(r'parents', ParentViewSet, basename='parent')
 
 
 urlpatterns = [
+    #supperuser
+    path('create-supperuser',CreateSuperAdminView.as_view(),name='create-supperuser'),
     #users
     path('', UserListView.as_view(), name='user-list'), 
     path('user/<int:id>/', UserDetailView.as_view(), name='user-detail'), 

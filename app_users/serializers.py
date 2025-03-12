@@ -36,6 +36,15 @@ class ParentSerializer(serializers.ModelSerializer):
         model = Parent
         fields = ('id','name','surname','address','phone','description','students')
 
+class SuperUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['phone', 'password','full_name']
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        return User.objects.create_superuser(**validated_data)
+
 class GetStudentsByIdsSerializer(serializers.Serializer):
     student_ids = serializers.ListField(child=serializers.IntegerField())
 
