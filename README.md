@@ -31,6 +31,7 @@
 - **PUT** `/users/update/student/{id}/` - Update student.
 - **POST** `/users/get-students-by-ids/` - Get students by IDs.
 - **GET** `/student-groups/{student_id}/` - Retrieves the list of groups that a specific student is enrolled in.
+- **GET `/api/v1/attendance/student/{student_id}/`** - This API allows a student to retrieve their own attendance records, grouped by months.
 
 ### Teacher Management
 
@@ -39,6 +40,7 @@
 - **PUT** `/users/update/teacher/{id}/` - Update teacher.
 - **POST** `/users/get-teachers-by-ids/` - Get teachers by IDs.
 - **GET** `/teacher-groups/{teacher_id}/` - Retrieves the list of groups that a specific teacher is enrolled in.
+- **GET** `/teacher-group/{teacher_id}/{group_id}/` - This API allows a teacher to retrieve information about a specific group they belong to.
 
 ---
 
