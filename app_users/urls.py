@@ -1,6 +1,5 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from setuptools.extern import names
 
 from app_users.views import TeacherCreateAPIView, TeacherListView, TeacherUpdateView, StudentListView, \
     StudentUpdateView, StudentCreateAPIView, TeacherRetrieveAPIView, StudentRetrieveAPIView, \
