@@ -14,11 +14,10 @@ class Status(BaseModel):
         verbose_name = 'Status'
         verbose_name_plural = 'Statuses'
 
-class Attendance(models.Model):
+class Attendance(BaseModel):
     group = models.ForeignKey(Group,on_delete=models.CASCADE, related_name='attendance')
     student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='attendance')
     status = models.ForeignKey('Status',on_delete=models.CASCADE,related_name='attendance')
-    created_at = models.DateTimeField()
 
     
     def __str__(self):
