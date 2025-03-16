@@ -1,10 +1,12 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from setuptools.extern import names
 
 from app_users.views import TeacherCreateAPIView, TeacherListView, TeacherUpdateView, StudentListView, \
     StudentUpdateView, StudentCreateAPIView, TeacherRetrieveAPIView, StudentRetrieveAPIView, \
     UserListView, UserDetailView, UserCreateView, UserUpdateView, UserDeleteView, ParentViewSet, \
-    TeacherGroupsAPIView, StudentGroupsAPIView, GetStudentsByIds, GetTeachersByIds, CreateSuperAdminView
+    TeacherGroupsAPIView, StudentGroupsAPIView, GetStudentsByIds, GetTeachersByIds, CreateSuperAdminView, \
+    TeacherGroupDetailAPIView, StudentAttendanceListAPIView
 
 app_name = 'users'
 
@@ -14,7 +16,7 @@ router.register(r'parents', ParentViewSet, basename='parent')
 
 urlpatterns = [
     #supperuser
-    path('create-supperuser',CreateSuperAdminView.as_view(),name='create-supperuser'),
+    path('create/supperuser',CreateSuperAdminView.as_view(),name='create-supperuser'),
     #users
     path('', UserListView.as_view(), name='user-list'), 
     path('user/<int:id>/', UserDetailView.as_view(), name='user-detail'), 
@@ -29,6 +31,7 @@ urlpatterns = [
     path('update/teacher/<int:id>/',TeacherUpdateView.as_view(),name="update_teacher"),
     path('teacher-groups/<int:teacher_id>/',TeacherGroupsAPIView.as_view(),name="teacher_groups"),
     path('get-teachers-by-ids/',GetTeachersByIds.as_view(),name='teachers-by-id'),
+    path('teacher-group/<int:teacher_id>/<int:group_id>/', TeacherGroupDetailAPIView.as_view(),name="teacher_group_detail"),
 
     #student
     path('students/',StudentListView.as_view(),name="all_students"),
@@ -37,6 +40,7 @@ urlpatterns = [
     path('update/student/<int:id>/',StudentUpdateView.as_view(),name="update_student"),
     path('student-groups/<int:student_id>/', StudentGroupsAPIView.as_view(), name="student_groups"),
     path('get-students-by-ids/',GetStudentsByIds.as_view(),name='students-by-id'),
+    path('attendance/student/<int:student_id>/',StudentAttendanceListAPIView.as_view(),name='student-attendance'),
 
     #parent
     path('',include(router.urls)),

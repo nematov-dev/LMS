@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
+
+from app_courses.models import Group
 from app_users.models import Teacher, User, Student, Parent
 
 
@@ -44,6 +46,7 @@ class SuperUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return User.objects.create_superuser(**validated_data)
+
 
 class GetStudentsByIdsSerializer(serializers.Serializer):
     student_ids = serializers.ListField(child=serializers.IntegerField())

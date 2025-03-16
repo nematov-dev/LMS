@@ -1,12 +1,19 @@
+from calendar import month_name
+from collections import defaultdict
+
+from drf_yasg import openapi
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.generics import ListAPIView, UpdateAPIView, RetrieveAPIView, get_object_or_404
 from rest_framework.response import Response
 from rest_framework import status, generics, viewsets
 from drf_yasg.utils import swagger_auto_schema
 
-from app_common.permissions import AdminUser, AdminOrOwner
-from app_common.pagination import Pagination
+from app_attendance.models import Attendance
+from app_attendance.serializers import AttendanceSerializer
+from app_common.permissions import AdminUser, AdminOrOwner, AdminOrTeacher, AdminOrStudent
+from app_common.pagination import Pagination, StudentAttendancePagination
 from app_courses.models import Group
 from app_courses.serializers import GroupSerializer
 from app_users.serializers import TeacherSerializer, UserSerializer, StudentSerializer, UserAndTeacherSerializer, \
@@ -131,6 +138,33 @@ class TeacherGroupsAPIView(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+class TeacherGroupDetailAPIView(APIView):
+    permission_classes = [IsAuthenticated,AdminOrTeacher]
+
+    def get(self, request, teacher_id, group_id):
+        if not request.user.is_admin and (
+                not hasattr(request.user, 'teacher') or request.user.teacher.id != teacher_id):
+            return Response(
+                {"detail": "Siz faqat o‘z guruhlaringizni ko‘rishingiz mumkin!"},
+                status=status.HTTP_403_FORBIDDEN
+            )
+        try:
+            # O'qituvchiga tegishli guruhni topamiz
+            group = Group.objects.get(id=group_id, teacher__id=teacher_id)
+            students = Student.objects.filter(group=group)
+
+            # Ma’lumotlarni serializatsiya qilish
+            group_data = GroupSerializer(group).data
+            students_data = StudentSerializer(students, many=True).data
+
+            return Response({
+                "group": group_data,
+                "students": students_data
+            }, status=status.HTTP_200_OK)
+
+        except Group.DoesNotExist:
+            return Response({"detail": "Guruh topilmadi yoki bu o'qituvchiga tegishli emas."}, status=status.HTTP_404_NOT_FOUND)
+
 #Student
 class StudentListView(ListAPIView):
     queryset = Student.objects.all()
@@ -171,6 +205,7 @@ class StudentCreateAPIView(APIView):
 
     @swagger_auto_schema(request_body=UserAndStudentSerializer)
     def post(self, request):
+
         user_data = request.data.get('user', {})
         user_serializer = UserSerializer(data=user_data)
 
@@ -216,6 +251,61 @@ class StudentGroupsAPIView(APIView):
 
         return Response(serializer.data, status=200)
 
+
+class StudentAttendanceListAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                name="page",
+                in_=openapi.IN_QUERY,
+                description="Page number for pagination",
+                type=openapi.TYPE_INTEGER
+            ),
+            openapi.Parameter(
+                name="page_size",
+                in_=openapi.IN_QUERY,
+                description="Number of records per page",
+                type=openapi.TYPE_INTEGER
+            ),
+        ],
+        responses={200: openapi.Response("Success", AttendanceSerializer(many=True))}
+    )
+
+    def get(self, request, student_id):
+        # Foydalanuvchi faqat o‘z ma'lumotlarini ko‘rsin
+        if hasattr(request.user, 'student') and request.user.student.id != int(student_id) and not request.user.is_admin:
+            return Response({'status': False, 'detail': 'Siz faqat o‘z davomatingizni ko‘ra olasiz!'}, status=403)
+
+        # Studentning davomatlarini olish
+        attendances = Attendance.objects.filter(student_id=student_id).order_by("-created_at")
+
+        # Agar hech qanday davomat bo‘lmasa
+        if not attendances.exists():
+            return Response({'status': False, 'detail': 'Davomat ma’lumotlari topilmadi!'}, status=404)
+
+        # Serializatsiya qilish
+        serialized_attendances = AttendanceSerializer(attendances, many=True).data
+
+        # Oy bo‘yicha guruhlash
+        grouped_attendances = defaultdict(list)
+        for attendance in serialized_attendances:
+            created_at = attendance['created_at'][:7]  # YYYY-MM format
+            grouped_attendances[created_at].append(attendance)
+
+        # JSON formatda chiqarish
+        response_data = [
+            {"month": month_name[int(month_year.split("-")[1])],
+             "year": month_year.split("-")[0],
+             "attendances": records}
+            for month_year, records in grouped_attendances.items()
+        ]
+
+        # Pagination qo‘llash
+        paginator = StudentAttendancePagination()
+        paginated_queryset = paginator.paginate_queryset(response_data, request)
+
+        return paginator.get_paginated_response(paginated_queryset)
 #Parrent
 class ParentViewSet(viewsets.ViewSet):
     permission_classes = [AdminUser]

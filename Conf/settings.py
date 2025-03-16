@@ -64,7 +64,7 @@ ROOT_URLCONF = 'Conf.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -172,3 +172,16 @@ SWAGGER_SETTINGS = {
     },
     'USE_SESSION_AUTH': False,  # Session auth ni o‘chirib qo‘yish (faqat token ishlatish)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

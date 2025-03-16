@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #004080;
+        }
+        pre {
+            background: #e6f2ff;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center">API Documentation</h1>
+
+        <h2>Authentication APIs</h2>
+        <pre>- POST /auth/login/ - Authenticate user and return access token.<br>
+- POST /auth/logout/ - Logout user by invalidating the token.<br>
+- GET /auth/me/ - Retrieve logged-in user information.<br>
+- POST /auth/change-password/ - Change user password.<br>
+- POST /auth/reset-password/ - Request password reset.<br>
+- POST /auth/verify-otp/ - Verify OTP for rest-password.<br>
+- POST /auth/set-new-password/ - Set a new password after reset.<br>
+- POST /auth/token/refresh/ - Refresh authentication token.</pre>
+
+        <h2>Users APIs</h2>
+        <pre>
+<h3>User Management</h3>
+- GET /users/ - List all users.<br>
+- POST /users/create/student/ - Create a new student.<br>
+- POST /users/create/teacher/ - Create a new teacher.<br>
+- POST /users/create/superuser/ - Create a new superuser.<br>
+- POST /users/create/user/ - Create a new user.<br>
+- DELETE /users/delete/user/{id}/ - Delete user.<br>
+
+
+<h3>Student Management</h3>
+- GET /users/students/ - List all students.<br>
+- GET /users/student/{id}/ - Get student details.<br>
+- PUT /users/update/student/{id}/ - Update student.<br>
+- POST /users/get-students-by-ids/ - Get students by IDs.<br>
+- GET /student-groups/{student_id}/ - Retrieves the list of groups that a specific student is enrolled in.<br>
+
+
+<h3>Teacher Management</h3>- GET /users/teachers/ - List all teachers.<br>
+- GET /users/teacher/{id}/ - Get teacher details.<br>
+- PUT /users/update/teacher/{id}/ - Update teacher.<br>
+- POST /users/get-teachers-by-ids/ - Get teachers by IDs.<br>
+- GET /teacher-groups/{teacher_id}/ - Retrieves the list of groups that a specific teacher is enrolled in.<br>
+
+</pre>
+
+
+        <h2>Attendance APIs</h2>
+        <pre>- GET /attendances/attendance/ - Retrieve all attendance.<br>
+- POST /attendances/attendance/create/attendance/ - Create a new attendance.<br>
+- GET /attendances/attendance/{id}/ - Retrieve attendance details by ID.<br>
+- DELETE /attendances/attendance/{id}/delete/attendance/ - Delete an attendance.<br>
+- PUT /attendances/attendance/{id}/update/attendance/ - Update an attendance.</pre><br>
+
+        <h2>Attendance Status APIs</h2>
+        <pre>- GET /attendances/status/ - List all statuses.<br>
+- POST /attendances/status/create/status/ - Create new status.<br>
+- GET /attendances/status/{id}/ - Get status details.<br>
+- DELETE /attendances/status/{id}/delete/status/ - Delete status.<br>
+- PUT /attendances/status/{id}/update/status/ - Update status.</pre>
+
+        <h2>Courses APIs</h2>
+        <pre>- GET /courses/courses/ - List all courses.<br>
+- POST /courses/courses/create/course/ - Create a new course.<br>
+- GET /courses/courses/{id}/ - Get course details.<br>
+- DELETE /courses/courses/{id}/delete/course/ - Delete a course.<br>
+- PUT /courses/courses/{id}/update/course/ - Update course.<br>
+- POST /courses/get-groups-by-ids/ - Get groups by IDs.</pre>
+
+        <h2>Groups APIs</h2>
+        <pre>- GET /courses/groups/ - List all groups.<br>
+- POST /courses/groups/create/group/ - Create a new group.<br>
+- GET /courses/groups/{id}/ - Get group details.<br>
+- POST /courses/groups/{id}/add-student/ - Add student to group.<br>
+- POST /courses/groups/{id}/add-teacher/ - Add teacher to group.<br>
+- DELETE /courses/groups/{id}/delete/group/ - Delete group.<br>
+- POST /courses/groups/{id}/remove-student/ - Remove student from group.<br>
+- POST /courses/groups/{id}/remove-teacher/ - Remove teacher from group.<br>
+- PUT /courses/groups/{id}/update/group/ - Update group.</pre>
+
+        <h2> Homework Reviews APIs </h2>
+        <pre>- GET /courses/homework-reviews/ - List all homework reviews.<br>
+- POST /courses/homework-reviews/create/homework-review/ - Create a new homework review.<br>
+- GET /courses/homework-reviews/{id}/ - Get homework review details.<br>
+- DELETE /courses/homework-reviews/{id}/delete/homework-review/ - Delete homework review.<br>
+- PUT /courses/homework-reviews/{id}/update/homework-review/ - Update homework review.<br>
+</pre>
+        <h2> Homework Submissions APIs</h2>
+        <pre>- GET /courses/homework-submissions/ - List all homework submissions.<br>
+- POST /courses/homework-submissions/create/homework-submission/ - Create a new homework submission.<br>
+- GET /courses/homework-submissions/{id}/ - Get homework submission details.<br>
+- DELETE /courses/homework-submissions/{id}/delete/homework-submission/ - Delete homework submission.<br>
+- PUT /courses/homework-submissions/{id}/update/homework-submission/ - Update homework submission.<br>
+</pre>
+        <h2>Homeworks APIs</h2>
+        <pre>- GET /courses/homeworks/ - List all homeworks.<br>
+- POST /courses/homeworks/create/homework/ - Create a new homework.<br>
+- GET /courses/homeworks/{id}/ - Get homework details.<br>
+- DELETE /courses/homeworks/{id}/delete/homework/ - Delete homework.<br>
+- PUT /courses/homeworks/{id}/update/homework/ - Update homework.</pre>
+
+        <h2>Subjects APIs</h2>
+        <pre>- GET /courses/subjects/ - List all subjects.<br>
+- POST /courses/subjects/create/subject/ - Create a new subject.<br>
+- GET /courses/subjects/{id}/ - Get subject details.<br>
+- DELETE /courses/subjects/{id}/delete/subject/ - Delete subject.<br>
+- PUT /courses/subjects/{id}/update/subject/ - Update subject.</pre>
+
+        <h2>Tables APIs</h2>
+        <pre>- GET /courses/tables/ - List all tables.<br>
+- POST /courses/tables/create/table/ - Create a new table.<br>
+- GET /courses/tables/{id}/ - Get table details.<br>
+- DELETE /courses/tables/{id}/delete/table/ - Delete table.<br>
+- PUT /courses/tables/{id}/update/table/ - Update table.</pre>
+
+        <h2>Table Types APIs</h2>
+        <pre>- GET /courses/table-types/ - List all table types.<br>
+- POST /courses/table-types/create/tabletype/ - Create a new table type.<br>
+- GET /courses/table-types/{id}/ - Get table type details.<br>
+- DELETE /courses/table-types/{id}/delete/tabletype/ - Delete table type.<br>
+- PUT /courses/table-types/{id}/update/tabletype/ - Update table type.</pre>
+
+        <h2>Payment Types APIs</h2>
+        <pre>- GET /payments/payment-type/ - List payment types.<br>
+- POST /payments/payment-type/create/payment-type/ - Create new payment type.<br>
+- GET /payments/payment-type/{id}/ - Get payment type details.<br>
+- DELETE /payments/payment-type/{id}/delete/payment-type/ - Delete payment type.<br>
+- PUT /payments/payment-type/{id}/update/payment-type/ - Update payment type.
+</pre>
+
+        <h2>Payments APIs</h2>
+        <pre>
+- GET /payments/payment/ - List all payments.<br>
+- POST /payments/payment/create/payment/ - Create a new payment.<br>
+- GET /payments/payment/{id}/ - Get payment details.<br>
+- DELETE /payments/payment/{id}/delete/payment/ - Delete a payment.<br>
+- PUT /payments/payment/{id}/update/payment/ - Update payment details.</pre>
+
+        <h2>Statistics APIs</h2>
+        <pre><h3>Attendance Statistics</h3>
+- GET /statistics/attendance-statistics/ - Get attendance statistics.<br>
+
+ <h3>Courses Statistics</h3>
+- GET /statistics/courses-statistics/ - Get courses statistics.<br>
+
+<h3>Groups Statistics</h3>
+- GET /statistics/groups-statistics/ - Get group statistics.<br>
+
+<h3>Payments Statistics</h3>
+- GET /statistics/payments-statistics/ - Get payments statistics.<br>
+
+<h3>Students Statistics</h3>
+- GET /statistics/students-statistic/ - Get students statistics.<br>
+
+<h3>Teachers Statistics</h3>
+- GET /statistics/teachers-statistic/ - Get teachers statistics.</pre><br><br>
+        
+        
+        <h2>Notes</h2>
+        <p>
+<strong>- {id} should be replaced with the actual ID of the resource.
+- Use appropriate HTTP methods (GET, POST, PUT, DELETE) as per the endpoint.
+- Ensure authentication for protected routes.</strong></p>
+        <h2>Contact</h2>
+        <p><strong>For further questions, contact the developer: <a href="https://nematov.uz" target="_blank">nematov.uz</a></strong></p>
+    </div>
+</body>
+</html>
